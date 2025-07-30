@@ -35,9 +35,19 @@ voiceSelect.addEventListener("change", () => {
 
 // ✅ Speak the typed text when button is clicked
 document.querySelector("button").addEventListener("click", () => {
-    let text = document.querySelector("textarea").value.trim();
+    const text = document.querySelector("textarea").value.trim();
     if (!text) return;
-    
-    speech.text = text;
-    window.speechSynthesis.speak(speech);
+
+    // 🟢 Create new instance for accurate voice & settings
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // 🟢 Apply selected voice
+    const selectedVoice = voices[voiceSelect.selectedIndex];
+    if (selectedVoice) {
+        utterance.voice = selectedVoice;
+    }
+
+    // 🟢 Speak
+    window.speechSynthesis.speak(utterance);
 });
+
